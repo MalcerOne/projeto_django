@@ -2,25 +2,60 @@
 {% load static %}
 
 {% block content %}
-<img src="{% static 'notes/img/logo-getit.png' %}" />
-<p>Como o Post-it, mas com outro verbo</p>
+<div class="appbar">
+    <img src="{% static 'notes/img/logo-getit.png' %}" class="logo" />
+    <span class="subtitle">Como o Post-it, mas com outro verbo</span>
+</div>
 
-<form method="post">
-  {% csrf_token %}
-  <label for="titulo">Título</label>
-  <input id="titulo" type="text" name="titulo" />
-  <label for="detalhes">Detalhes</label>
-  <textarea id="detalhes" name="detalhes"></textarea>
-  <input type="submit" />
-</form>
+<main class="container">
+    <form class="form-card" method="post">
+        {% csrf_token %}
+        <input 
+        type="hidden" 
+        value='None' 
+        name='edit_note'
+        >
+        <input
+          id="titulo"
+          class="form-card-title"
+          type="text"
+          name="titulo"
+          placeholder="Título"
+        />
+        <textarea
+          class="autoresize"
+          name="detalhes"
+          placeholder="Digite o conteúdo..."
+        ></textarea>
+        <textarea
+          class="autoresize"
+          name="tags"
+          placeholder="Digite a Tag"
+        ></textarea>
+        <button class="btn" type="submit" name="form-btn">Criar</button>
+      </form>
 
-<ul>
-    {% for note in notes %}
-    <li>{{note.title}}
-        <ul>
-            <li>{{note.content}}</li>
-        </ul>
-    </li>
-    {% endfor %}
-</ul>
+    <div class="card-container">
+        {% for note in notes %}
+            <div class="card">
+                <div class="titulo-e-icones">
+                    <input type="image" src="https://img.icons8.com/metro/26/000000/trash.png" name="delete-button" class="delete-image" title="Delete o get-it" value="">
+                    <input type="image" src="https://img.icons8.com/ios-glyphs/64/000000/edit--v2.png" name="edit-button" title="Edite o get-it" class="preset-file" value="" onclick="editNote({{note.id}})">
+    
+                    <h3 class="card-title" name="title_card-{{note.id}}" id="title">{{note.title}}</h3>
+                </div>
+                
+                <h3 class="card-tag">
+                    {{note.tag}}
+                </h3>
+
+                <div class="card-content">
+                    <p id="details" name="details_card-{{note.id}}">{{note.content}}</p>
+                </div>
+
+                <input type="hidden" name="note_id" value={id}>
+            </div>
+        {% endfor %}
+    </div>
+</main>
 {% endblock %}
