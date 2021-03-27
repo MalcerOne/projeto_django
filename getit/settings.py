@@ -74,6 +74,9 @@ WSGI_APPLICATION = 'getit.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+""" Docker command -> docker run --rm --name pg-docker -e POSTGRES_PASSWORD=escolhaumasenha -d -p 5432:5432 -v "C:\Documentos Insper\4º_semestre\TecWeb\projeto_django\docker\volumes\postgres":/var/lib/postgresql/data postgres 
+"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
